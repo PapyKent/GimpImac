@@ -1,11 +1,12 @@
 #include "LUT.h"
+#include <math.h>
 
 void resetLUT(Lut* lut){
 	int i;
 	for(i=0; i<255 ; i++){		
 		
 		lut->tabR[i] = 0;
-		lut->tabR[i] = 0;
+		lut->tabG[i] = 0;
 		lut->tabB[i] = 0;
 		
 	}
@@ -19,14 +20,20 @@ void addlum(Lut* lut, int para){
 		
 		if( (lut->tabR[i]+para) <= 255)
 			lut->tabR[i]+= para;
+		else
+			lut->tabR[i] = 255;
 			
 			
-		if( (lut->tabR[i]+para) <= 255)
-			lut->tabR[i]+= para;
+		if( (lut->tabG[i]+para) <= 255)
+			lut->tabG[i]+= para;
+		else
+			lut->tabG[i] = 255;
 			
 			
 		if( (lut->tabB[i]+para) <= 255)
 			lut->tabB[i]+= para;
+		else
+			lut->tabB[i] = 255;
 		
 	}
 	
@@ -34,28 +41,134 @@ void addlum(Lut* lut, int para){
 
 
 
-void dimlum(int para){
+void dimlum(Lut* lut, int para){
 	//diminution de la luminosité
 	
+	int i;
+	for(i=0; i<255 ; i++){
+		
+		if( (lut->tabR[i]-para) > 0)
+			lut->tabR[i]-= para;
+		else
+			lut->tabR[i] = 0;
+			
+			
+		if( (lut->tabG[i]-para) > 0)
+			lut->tabG[i]-= para;
+		else
+			lut->tabG[i] = 0;
+			
+			
+		if( (lut->tabB[i]-para) > 0)
+			lut->tabB[i]-= para;
+		else
+			lut->tabB[i] = 0;
+		
+	}
+	
 	
 }
 
 
-void addcon(int para){
+void addcon(Lut* lut) { 
 	//augmente le contraste
 	
+	int min = 40;
+	int max = 215;
+	
+	int i;
+	
+	for (i=0; i<255; i++) {
+		
+		// pour le ROUGE
+		
+		if (lut->tabR[i] < min)
+			lut->tabR[i] = 0;
+		
+		else if (lut->tabR[i] > max)
+			lut->tabR[i] = 255;
+		
+		else if (lut->tabR[i] >= min && lut->tabR[i] <= max)
+			lut->tabR[i] = round((double)(lut->tabR[i] - min) / (double)(max - min)*255.0);
+			
+			
+		// pour le VERT
+		
+		if (lut->tabG[i] < min)
+			lut->tabG[i] = 0;
+		
+		else if (lut->tabG[i] > max)
+			lut->tabG[i] = 255;
+		
+		else if (lut->tabG[i] >= min && lut->tabG[i] <= max)
+			lut->tabG[i] = round((double)(lut->tabG[i] - min) / (double)(max - min)*255.0);
+		
+		
+		// pour le BLEU
+	
+		if (lut->tabB[i] < min)
+			lut->tabB[i] = 0;
+		
+		else if (lut->tabB[i] > max)
+			lut->tabB[i] = 255;
+		
+		else if (lut->tabB[i] >= min && lut->tabB[i] <= max)
+			lut->tabB[i] = round((double)(lut->tabB[i] - min) / (double)(max - min)*255.0);
+	
+	}
+	
+	
 	
 }
 
-void dimcon(int para){
+void dimcon(Lut* lut){
 	//diminution du contraste
 	
+	int min = 40;
+	int max = 215;
+	
+	int i;
+	
+	for (i=0; i<255; i++) {
+		
+		// pour le ROUGE
+		
+		lut->tabR[i] = round((double)((lut->tabR[i] * (max-min)) / 255) + min);
+		
+		// pour le VERT
+		
+		lut->tabG[i] = round((double)((lut->tabG[i] * (max-min)) / 255) + min);
+		
+		// pour le BLEU
+		
+		lut->tabB[i] = round((double)((lut->tabB[i] * (max-min)) / 255) + min);
+			
+	}
+	
 	
 }
 
 
-void invert(){//255 - couleur actuelle
+void invert(Lut *lut) {
 	//inversion de la couleur
+	
+	int i;
+	
+	for (i=0; i<255; i++) {
+	
+		// pour le ROUGE
+		
+		lut->tabR[i] = 255 - lut->tabR[i];
+		
+		// pour le VERT
+		
+		lut->tabG[i] = 255 - lut->tabG[i];
+		
+		// pour le BLEU
+		
+		lut->tabB[i] = 255 - lut->tabB[i];
+		
+	}
 	
 	
 	

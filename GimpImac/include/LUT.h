@@ -14,10 +14,10 @@ typedef struct Lut{
 void resetLUT(Lut* lut);
 
 void addlum(Lut* lut, int para);//augmente la luminosité
-void dimlum(int para);//diminution de la luminosité
-void addcon(int para);//augmente le contraste
-void dimcon(int para);//diminution du contraste
-void invert();//inversion de la couleur
+void dimlum(Lut* lut, int para);//diminution de la luminosité
+void addcon(Lut* lut);//augmente le contraste
+void dimcon(Lut* lut);//diminution du contraste
+void invert(Lut* lut);//inversion de la couleur
 
 // --A DEFINIR -- ajouter pls para
 void sepia();//effet sepia
