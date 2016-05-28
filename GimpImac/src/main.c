@@ -13,8 +13,8 @@
 
 #include "Calque.h"
 
-float tabX[] = { 0.07 , 0.24 , 0.37 , 0.625 , 0.875 , 0.75 , 0.65 , 0.65 , 0.65 , 0.65 , 0.65 , 0.85 , 0.85 , 0.85 , 0.85 , 0.85 };
-float tabY[] = { 0.92 , 0.92 , 0.92 , 0.115 , 0.115 , 0.115 , 0.915 , 0.755 , 0.595 , 0.435 , 0.275 , 0.915 , 0.755 , 0.595 , 0.435 , 0.275 };
+float tabX[] = { 70 , 240, 370 , 625 , 875 , 750 , 650 , 650 , 650 , 650 , 650 , 850 , 850 , 850 , 850 , 850 };
+float tabY[] = { 48 , 48 , 48  , 531 , 531 , 531 , 51 , 147 , 243 , 339 , 435 , 51 , 147 , 243 , 339 , 435 };
 	
 /// ///////////////////////////////////////////////////////////////////////////
 /// Tableau representant une image...
@@ -77,6 +77,7 @@ void kbdSpFunc(int c, int x, int y)
 /// fonction associée aux evenements souris
 /// - x,y : coordonnée de la souris dans la fenêtre
 void clickMouse(int button,int state,int x,int y) {
+	
     if (button == GLUT_LEFT_BUTTON) {
         printf("Button gauche ");
     }
@@ -95,14 +96,140 @@ void clickMouse(int button,int state,int x,int y) {
     
  /// //////////////////////////////////////////////////
  
-	for (i = 0; i < 16; i++) {
+ 
+ 
+	for (int i = 0; i < 16; i++) {
 		
-		if (x == tabX[i]
+		/// /////////  IMPORT EXPORT HISTOGRAMME	//////
+		
+		if (i == 0) {
+		
+			if (x > tabX[i] - 50 && x < tabX[i] + 50 && y > tabY[i] - 18 && y < tabY[i] + 18) {
+				printf("IMPORT\n");
+			}
+		}
+		
+		if (i == 1) {
+		
+			if (x > tabX[i] - 50 && x < tabX[i] + 50 && y > tabY[i] - 18 && y < tabY[i] + 18) {
+				printf("EXPORT\n");
+			}
+		}
+		
+		if (i == 2) {
+		
+			if (x > tabX[i] - 50 && x < tabX[i] + 50 && y > tabY[i] - 18 && y < tabY[i] + 18) {
+				printf("HISTOGRAMME\n");
+			}
+		}
+		
+		/// /////////  << ET >>	  /////////
+		
+		if (i == 3) {
+		
+			if (x > tabX[i] - 25 && x < tabX[i] + 25 && y > tabY[i] - 21 && y < tabY[i] + 21) {
+				printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
+			}
+		}
+		
+		
+		if (i == 4) {
+		
+			if (x > tabX[i] - 25 && x < tabX[i] + 25 && y > tabY[i] - 21 && y < tabY[i] + 21) {
+				printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+			}
+		}
+		
+		
+		/// /////////  SUPPRIMER CALQUE	  /////////
+		
+		if (i == 5) {
+		
+			if (x > tabX[i] - 70 && x < tabX[i] + 70 && y > tabY[i] - 21 && y < tabY[i] + 21) {
+				printf("SUPPRIMER CALQUE\n");
+			}
+		}
+		
+		
+		
+		/// /////////  BOUTONS BLEUS  /////////
+		
+		if (i == 6) {
+		
+			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+				printf("AAAADDDDD  LUUUUUUUUUUUUUUUUUUUMMMMMMM\n");
+			}
+		}
+		
+		if (i == 7) {
+		
+			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+				printf("AAAADDDDD  COOOONTRASTE\n");
+			}
+		}
+		
+		if (i == 8) {
+		
+			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+				printf("AAAADDDDD  OPACITE\n");
+			}
+		}
+		
+		if (i == 9) {
+		
+			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+				printf("AAAADDDDD  INVERSER\n");
+			}
+		}
+		
+		if (i == 10) {
+		
+			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+				printf("AAAADDDDD  SEPIA\n");
+			}
+		}
+		
+		
+		/// /////////  BOUTONS VERTS  /////////
+		
+		if (i == 11) {
+		
+			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+				printf("DIIIIIIMMMM  LUUUUUUUUUUUUUUUUUUUMMMMMMM\n");
+			}
+		}
+		
+		if (i == 12) {
+		
+			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+				printf("DIIMMMM  COOOONTRASTE\n");
+			}
+		}
+		
+		if (i == 13) {
+		
+			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+				printf("DIIMMMM OPACITE\n");
+			}
+		}
+		
+		if (i == 14) {
+		
+			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+				printf("DIIMMMM INVERSER\n");
+			}
+		}
+		
+		if (i == 15) {
+		
+			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+				printf("DIIMMMM  SEPIA\n");
+			}
+		}
+		
 	}
 		
-    if (x == 700) {
-		printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
-	}
+ /// ///////////////////////////////////////////////////
     
     printf("Coordonnees du point clique %d %d\n",x,y);
 }
