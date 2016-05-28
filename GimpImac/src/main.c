@@ -93,7 +93,12 @@ void clickMouse(int button,int state,int x,int y) {
         printf("relache\n");
     }
     
-   
+ /// //////////////////////////////////////////////////
+ 
+	for (i = 0; i < 16; i++) {
+		
+		if (x == tabX[i]
+	}
 		
     if (x == 700) {
 		printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
