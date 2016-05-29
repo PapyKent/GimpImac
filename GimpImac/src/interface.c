@@ -79,7 +79,7 @@ void fixeFonctionClicSouris(void (*fct)(int button,int state,int x,int y)) {
 void fixeFonctionDessin(void (*fct)(void)) {
 	fct_dessin_user = fct;
 }
-void actualiseImage(unsigned char* newImage) {
+void actualiseImage (unsigned char* newImage) {
 	image_src = newImage;
 }
 
@@ -129,7 +129,7 @@ void kbdFunc_GLIMAGIMP(unsigned char c, int x, int y) {
 void reshapeFunc(int width,int height) {
 	// ON IGNORE LE RESIZE
 	glutReshapeWindow(width_ecran,height_ecran);
-	printf("Nouvelle taille %d %d\n",width_ecran,height_ecran);
+    //printf("Nouvelle taille %d %d\n",width_ecran,height_ecran);
 	glViewport( 0, 0, (GLint)width_ecran, (GLint)height_ecran );
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
@@ -205,7 +205,9 @@ void drawScene_GLIMAGIMP(void) {
 	
 	/// ****************** DESSIN DE L'IMAGE ***************************************
 	//printf("Ici avec %d / %d")
-	glDrawPixels(width_image,height_image,GL_RGB,GL_UNSIGNED_BYTE,image_src);
+    glRasterPos2f(0, 0.8);
+    glPixelZoom( 1, -1 );
+    glDrawPixels(width_image,height_image,GL_RGB,GL_UNSIGNED_BYTE,image_src);
 
 	/// ****************** DESSIN CLASSIQUE ****************************************
 	if (fct_dessin_user != NULL) {

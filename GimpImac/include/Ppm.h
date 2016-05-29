@@ -8,6 +8,6 @@
 
 
 
-char* chargementPPM(const char * nomFichier, int * longueur, int * hauteur);
-int exportPPM(const char *nomFichier, char* exp, int longueur, int hauteur);
+unsigned char* chargementPPM(const char * nomFichier, int * longueur, int * hauteur);
+int exportPPM(const char *nomFichier, unsigned char* exp, int longueur, int hauteur);
 #endif // PPM_H

@@ -1,16 +1,30 @@
 #include "LUT.h"
 #include <math.h>
 
-void resetLUT(Lut* lut){
-	int i;
-	for(i=0; i<255 ; i++){		
-		
-		lut->tabR[i] = 0;
-		lut->tabG[i] = 0;
-		lut->tabB[i] = 0;
-		
-	}
+
+void initLUT(Lut* lut){
+    int i;
+    for(i=0; i<255 ; i++){
+
+        lut->tabR[i] = i;
+        lut->tabG[i] = i;
+        lut->tabB[i] = i;
+
+    }
+
 }
+
+void copieLUT(Lut lutSRC, Lut* lutCopie){
+    int i;
+    for(i=0; i<255 ; i++){
+
+        lutCopie->tabR[i] = lutSRC.tabR[i];
+        lutCopie->tabG[i] = lutSRC.tabG[i];
+        lutCopie->tabB[i] = lutSRC.tabB[i];
+
+    }
+}
+
 
 
 void addlum(Lut* lut, int para){
@@ -18,19 +32,19 @@ void addlum(Lut* lut, int para){
 	int i;
 	for(i=0; i<255 ; i++){
 		
-		if( (lut->tabR[i]+para) <= 255)
+        if( (lut->tabR[i]+para) < 255)
 			lut->tabR[i]+= para;
 		else
 			lut->tabR[i] = 255;
 			
 			
-		if( (lut->tabG[i]+para) <= 255)
+        if( (lut->tabG[i]+para) < 255)
 			lut->tabG[i]+= para;
 		else
 			lut->tabG[i] = 255;
 			
 			
-		if( (lut->tabB[i]+para) <= 255)
+        if( (lut->tabB[i]+para) < 255)
 			lut->tabB[i]+= para;
 		else
 			lut->tabB[i] = 255;
@@ -169,7 +183,30 @@ void invert(Lut *lut) {
 		lut->tabB[i] = 255 - lut->tabB[i];
 		
 	}
+}
 	
+void sepia(Lut* lut) {
+	
+	int i;
+	float moyenne;
+	
+	for (i=0; i<255; i++) {
+		
+		moyenne = (lut->tabR[i] + lut->tabG[i] + lut->tabB[i]) / 3;
+	
+		// pour le ROUGE
+		
+		lut->tabR[i] = moyenne * 0.784;
+		
+		// pour le VERT
+		
+		lut->tabG[i] = moyenne * 0.588;
+		
+		// pour le BLEU
+		
+		lut->tabB[i] = moyenne * 0.392;
+	
+	}
 	
 	
 }
