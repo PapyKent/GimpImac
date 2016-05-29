@@ -89,145 +89,147 @@ void clickMouse(int button,int state,int x,int y) {
     }
     if (state == GLUT_DOWN) {
         printf("clique\n");
+        
+         /// //////////////////////////////////////////////////
+ 
+ 
+ 
+		for (int i = 0; i < 16; i++) {
+			
+			/// /////////  IMPORT EXPORT HISTOGRAMME	//////
+			
+			if (i == 0) {
+			
+				if (x > tabX[i] - 50 && x < tabX[i] + 50 && y > tabY[i] - 18 && y < tabY[i] + 18) {
+					printf("IMPORT\n");
+				}
+			}
+			
+			if (i == 1) {
+			
+				if (x > tabX[i] - 50 && x < tabX[i] + 50 && y > tabY[i] - 18 && y < tabY[i] + 18) {
+					printf("EXPORT\n");
+				}
+			}
+			
+			if (i == 2) {
+			
+				if (x > tabX[i] - 50 && x < tabX[i] + 50 && y > tabY[i] - 18 && y < tabY[i] + 18) {
+					printf("HISTOGRAMME\n");
+				}
+			}
+			
+			/// /////////  << ET >>	  /////////
+			
+			if (i == 3) {
+			
+				if (x > tabX[i] - 25 && x < tabX[i] + 25 && y > tabY[i] - 21 && y < tabY[i] + 21) {
+					printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
+				}
+			}
+			
+			
+			if (i == 4) {
+			
+				if (x > tabX[i] - 25 && x < tabX[i] + 25 && y > tabY[i] - 21 && y < tabY[i] + 21) {
+					printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+				}
+			}
+			
+			
+			/// /////////  SUPPRIMER CALQUE	  /////////
+			
+			if (i == 5) {
+			
+				if (x > tabX[i] - 70 && x < tabX[i] + 70 && y > tabY[i] - 21 && y < tabY[i] + 21) {
+					printf("SUPPRIMER CALQUE\n");
+				}
+			}
+			
+			
+			
+			/// /////////  BOUTONS BLEUS  /////////
+			
+			if (i == 6) {
+			
+				if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+					printf("AAAADDDDD  LUUUUUUUUUUUUUUUUUUUMMMMMMM\n");
+				}
+			}
+			
+			if (i == 7) {
+			
+				if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+					printf("AAAADDDDD  COOOONTRASTE\n");
+				}
+			}
+			
+			if (i == 8) {
+			
+				if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+					printf("AAAADDDDD  OPACITE\n");
+				}
+			}
+			
+			if (i == 9) {
+			
+				if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+					printf("AAAADDDDD  INVERSER\n");
+				}
+			}
+			
+			if (i == 10) {
+			
+				if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+					printf("AAAADDDDD  SEPIA\n");
+				}
+			}
+			
+			
+			/// /////////  BOUTONS VERTS  /////////
+			
+			if (i == 11) {
+			
+				if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+					printf("DIIIIIIMMMM  LUUUUUUUUUUUUUUUUUUUMMMMMMM\n");
+				}
+			}
+			
+			if (i == 12) {
+			
+				if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+					printf("DIIMMMM  COOOONTRASTE\n");
+				}
+			}
+			
+			if (i == 13) {
+			
+				if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+					printf("DIIMMMM OPACITE\n");
+				}
+			}
+			
+			if (i == 14) {
+			
+				if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+					printf("DIIMMMM INVERSER\n");
+				}
+			}
+			
+			if (i == 15) {
+			
+				if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+					printf("DIIMMMM  SEPIA\n");
+				}
+			}
+			
+		}
     }
     else { // state == GLUT_UP
         printf("relache\n");
     }
     
- /// //////////////////////////////////////////////////
- 
- 
- 
-	for (int i = 0; i < 16; i++) {
-		
-		/// /////////  IMPORT EXPORT HISTOGRAMME	//////
-		
-		if (i == 0) {
-		
-			if (x > tabX[i] - 50 && x < tabX[i] + 50 && y > tabY[i] - 18 && y < tabY[i] + 18) {
-				printf("IMPORT\n");
-			}
-		}
-		
-		if (i == 1) {
-		
-			if (x > tabX[i] - 50 && x < tabX[i] + 50 && y > tabY[i] - 18 && y < tabY[i] + 18) {
-				printf("EXPORT\n");
-			}
-		}
-		
-		if (i == 2) {
-		
-			if (x > tabX[i] - 50 && x < tabX[i] + 50 && y > tabY[i] - 18 && y < tabY[i] + 18) {
-				printf("HISTOGRAMME\n");
-			}
-		}
-		
-		/// /////////  << ET >>	  /////////
-		
-		if (i == 3) {
-		
-			if (x > tabX[i] - 25 && x < tabX[i] + 25 && y > tabY[i] - 21 && y < tabY[i] + 21) {
-				printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
-			}
-		}
-		
-		
-		if (i == 4) {
-		
-			if (x > tabX[i] - 25 && x < tabX[i] + 25 && y > tabY[i] - 21 && y < tabY[i] + 21) {
-				printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
-			}
-		}
-		
-		
-		/// /////////  SUPPRIMER CALQUE	  /////////
-		
-		if (i == 5) {
-		
-			if (x > tabX[i] - 70 && x < tabX[i] + 70 && y > tabY[i] - 21 && y < tabY[i] + 21) {
-				printf("SUPPRIMER CALQUE\n");
-			}
-		}
-		
-		
-		
-		/// /////////  BOUTONS BLEUS  /////////
-		
-		if (i == 6) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("AAAADDDDD  LUUUUUUUUUUUUUUUUUUUMMMMMMM\n");
-			}
-		}
-		
-		if (i == 7) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("AAAADDDDD  COOOONTRASTE\n");
-			}
-		}
-		
-		if (i == 8) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("AAAADDDDD  OPACITE\n");
-			}
-		}
-		
-		if (i == 9) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("AAAADDDDD  INVERSER\n");
-			}
-		}
-		
-		if (i == 10) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("AAAADDDDD  SEPIA\n");
-			}
-		}
-		
-		
-		/// /////////  BOUTONS VERTS  /////////
-		
-		if (i == 11) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("DIIIIIIMMMM  LUUUUUUUUUUUUUUUUUUUMMMMMMM\n");
-			}
-		}
-		
-		if (i == 12) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("DIIMMMM  COOOONTRASTE\n");
-			}
-		}
-		
-		if (i == 13) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("DIIMMMM OPACITE\n");
-			}
-		}
-		
-		if (i == 14) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("DIIMMMM INVERSER\n");
-			}
-		}
-		
-		if (i == 15) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("DIIMMMM  SEPIA\n");
-			}
-		}
-		
-	}
+
 		
  /// ///////////////////////////////////////////////////
     
