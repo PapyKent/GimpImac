@@ -12,7 +12,7 @@
 #include "outils.h"
 
 #include "Calque.h"
-
+#include "Image.h"
 float tabX[] = { 70 , 240, 370 , 625 , 875 , 750 , 650 , 650 , 650 , 650 , 650 , 850 , 850 , 850 , 850 , 850 };
 float tabY[] = { 48 , 48 , 48  , 531 , 531 , 531 , 51 , 147 , 243 , 339 , 435 , 51 , 147 , 243 , 339 , 435 };
 	
@@ -21,32 +21,113 @@ float tabY[] = { 48 , 48 , 48  , 531 , 531 , 531 , 51 , 147 , 243 , 339 , 435 , 
 unsigned char* image_base = NULL;
 unsigned char* image_switch = NULL;
 int switch_image = 0;
-
+Image* image;
+Calque calqueActuel;
+Calque* listeCalque;
+TypeOperation op = normal;
+unsigned int w = 800,h = 600;
 ////////////////////////////      MAIN      ///////////////////////////
 
 /// ///////////////////////////////////////////////////////////////////////////
 /// fonction associée aux interruptions clavier
 /// - c : caractère saisi
 /// - x,y : coordonnée du curseur dans la fenetre
-void kbdFunc(unsigned char c, int x, int y) {
+///
+///
+///
+///
+void switchIm(){
+    if (!switch_image)
+        actualiseImage(image_switch);
+    else
+        actualiseImage(image_base);
+    switch_image = 1-switch_image;
+}
+
+void initCalqueVide(){
+    listeCalque = malloc(sizeof(Calque));
+    initCalqueBlanc(listeCalque,op,512, 512 ,1);
+    image_base = (unsigned char*)calqueToChar(*listeCalque);
+}
+
+void refreshScreen(){
+   image_switch = (unsigned char*)calqueToChar(*listeCalque);
+   actualiseImage(image_switch);
+
+}
+
+int addCalque(char* path, TypeOperation op, int opacite){
+    while(listeCalque->calqueSuivant!=NULL) listeCalque = listeCalque->calqueSuivant;
+    Calque* nvCalque = malloc(sizeof(Calque));
+    if(initCalque(nvCalque, path, op, opacite)==1){
+        nvCalque->calquePrecedent = listeCalque;
+        listeCalque->calqueSuivant = nvCalque;
+        listeCalque = listeCalque->calqueSuivant;
+       refreshScreen();
+
+    }
+    else return 0;
+    return 1;
+}
+
+void removeCalque(){
+
+
+    if(listeCalque->calqueSuivant != NULL && listeCalque->calquePrecedent != NULL){
+        Calque* tmp = listeCalque->calquePrecedent;
+        listeCalque = listeCalque->calqueSuivant;
+        free(listeCalque->calquePrecedent);
+        tmp->calqueSuivant = listeCalque;
+        listeCalque->calquePrecedent = tmp;
+    }
+    else if (listeCalque->calquePrecedent !=NULL){
+        listeCalque = listeCalque->calquePrecedent;
+        free(listeCalque->calqueSuivant);
+        listeCalque->calqueSuivant = NULL;
+    }
+    else if(listeCalque->calqueSuivant != NULL){
+        listeCalque = listeCalque->calqueSuivant;
+        free(listeCalque->calquePrecedent);
+        listeCalque->calquePrecedent = NULL;
+    }
+    else{
+
+        initCalqueVide();
+       //charger un calque blanc
+    }
+
+    refreshScreen();
+}
+
+void import(){
     char saisie[100] = {'\0'};
+    printf("Merci de rentrer le nom de l'image à charger' :");
+    if(scanf("%s",saisie)){
+
+        char result[100];
+        char* path = "../images/";
+        strcpy(result,path);
+        strcat(result,saisie);
+        printf("%s \n", result);
+        addCalque(result, op, 1);
+    }
+
+}
+void kbdFunc(unsigned char c, int x, int y) {
+
     printf("Touche tapee %c (coord souris %d/%d)\n",c,x,y);
     switch(c) {
         case 't': // Exemple de saisie sur le terminal
-            printf("Debraillement sur le terminal\n");
-            printf("Merci de rentrer une chaine de caractère :");
-            scanf("%s",saisie);
-            printf("On a tape %s\n",saisie);
+
+
+
             break;
         case 'i': // Exemple d'utilisation des fonctions de la bibliotheque glimagimp
             printInfo();
             break;
         case 's': // Exemple d'utilisation des fonctions de la bibliotheque glimagimp
-            if (!switch_image)
-                actualiseImage(image_switch);
-            else
-                actualiseImage(image_base);
-            switch_image = 1-switch_image;
+            switchIm();
+
             break;
         case 27: // Touche Escape
             printf("Fin du programme\n");
@@ -88,151 +169,177 @@ void clickMouse(int button,int state,int x,int y) {
         printf("Button droit ");
     }
     if (state == GLUT_DOWN) {
-        printf("clique\n");
+
+        int i;
+           for (i = 0; i < 16; i++) {
+
+               /// /////////  IMPORT EXPORT HISTOGRAMME	//////
+
+               if (i == 0) {
+
+                   if (x > tabX[i] - 50 && x < tabX[i] + 50 && y > tabY[i] - 18 && y < tabY[i] + 18) {
+                      import();
+                       //printf("test\n");
+                   }
+               }
+
+               if (i == 1) {
+
+                   if (x > tabX[i] - 50 && x < tabX[i] + 50 && y > tabY[i] - 18 && y < tabY[i] + 18) {
+                       printf("EXPORT\n");
+                       exportCalque(*listeCalque,(unsigned char*)image_switch,"../exports/export.txt");
+
+                   }
+               }
+
+               if (i == 2) {
+
+                   if (x > tabX[i] - 50 && x < tabX[i] + 50 && y > tabY[i] - 18 && y < tabY[i] + 18) {
+                       printf("HISTOGRAMME\n");
+                   }
+               }
+
+               /// /////////  << ET >>	  /////////
+
+               if (i == 3) {
+
+                   if (x > tabX[i] - 25 && x < tabX[i] + 25 && y > tabY[i] - 21 && y < tabY[i] + 21) {
+                       printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
+                       if(listeCalque->calquePrecedent != NULL){
+                             listeCalque = listeCalque->calquePrecedent;
+                             refreshScreen();
+                       }
+                   }
+               }
+
+
+               if (i == 4) {
+
+                   if (x > tabX[i] - 25 && x < tabX[i] + 25 && y > tabY[i] - 21 && y < tabY[i] + 21) {
+                       printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+                       if(listeCalque->calqueSuivant != NULL){
+                             listeCalque = listeCalque->calqueSuivant;
+                             refreshScreen();
+                       }
+                   }
+               }
+
+
+               /// /////////  SUPPRIMER CALQUE	  /////////
+
+               if (i == 5) {
+
+                   if (x > tabX[i] - 70 && x < tabX[i] + 70 && y > tabY[i] - 21 && y < tabY[i] + 21) {
+                       printf("SUPPRIMER CALQUE\n");
+                       removeCalque();
+                   }
+               }
+
+
+
+               /// /////////  BOUTONS BLEUS  /////////
+
+               if (i == 6) {
+
+                   if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+                       addlum(listeCalque->lut,1);
+                       appliquerLUTsurImage(listeCalque);
+                       refreshScreen();
+                   }
+               }
+
+               if (i == 7) {
+
+                   if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+                       printf("AAAADDDDD  COOOONTRASTE\n");
+                       addcon(listeCalque->lut);
+                       appliquerLUTsurImage(listeCalque);
+                       refreshScreen();
+                   }
+               }
+
+               if (i == 8) {
+
+                   if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+                       printf("AAAADDDDD  OPACITE\n");
+                   }
+               }
+
+               if (i == 9) {
+
+                   if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+                       printf("AAAADDDDD  INVERSER\n");
+                       invert(listeCalque->lut);
+                       appliquerLUTsurImage(listeCalque);
+                       refreshScreen();
+                   }
+               }
+
+               if (i == 10) {
+
+                   if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+                       printf("AAAADDDDD  SEPIA\n");
+                   }
+               }
+
+
+               /// /////////  BOUTONS VERTS  /////////
+
+               if (i == 11) {
+
+                   if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+                       printf("DIIIIIIMMMM  LUUUUUUUUUUUUUUUUUUUMMMMMMM\n");
+                       dimlum(listeCalque->lut,1);
+                       appliquerLUTsurImage(listeCalque);
+                       refreshScreen();
+                   }
+               }
+
+               if (i == 12) {
+
+                   if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+                       printf("DIIMMMM  COOOONTRASTE\n");
+                       dimcon(listeCalque->lut);
+                       appliquerLUTsurImage(listeCalque);
+                       refreshScreen();
+                   }
+               }
+
+               if (i == 13) {
+
+                   if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+                       printf("DIIMMMM OPACITE\n");
+                   }
+               }
+
+               if (i == 14) {
+
+                   if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+                       printf("DIIMMMM INVERSER\n");
+                   }
+               }
+
+               if (i == 15) {
+
+                   if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
+                       printf("DIIMMMM  SEPIA\n");
+                   }
+               }
+
+           }
     }
     else { // state == GLUT_UP
         printf("relache\n");
     }
     
- /// //////////////////////////////////////////////////
- 
- 
- 
-	for (int i = 0; i < 16; i++) {
-		
-		/// /////////  IMPORT EXPORT HISTOGRAMME	//////
-		
-		if (i == 0) {
-		
-			if (x > tabX[i] - 50 && x < tabX[i] + 50 && y > tabY[i] - 18 && y < tabY[i] + 18) {
-				printf("IMPORT\n");
-			}
-		}
-		
-		if (i == 1) {
-		
-			if (x > tabX[i] - 50 && x < tabX[i] + 50 && y > tabY[i] - 18 && y < tabY[i] + 18) {
-				printf("EXPORT\n");
-			}
-		}
-		
-		if (i == 2) {
-		
-			if (x > tabX[i] - 50 && x < tabX[i] + 50 && y > tabY[i] - 18 && y < tabY[i] + 18) {
-				printf("HISTOGRAMME\n");
-			}
-		}
-		
-		/// /////////  << ET >>	  /////////
-		
-		if (i == 3) {
-		
-			if (x > tabX[i] - 25 && x < tabX[i] + 25 && y > tabY[i] - 21 && y < tabY[i] + 21) {
-				printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
-			}
-		}
-		
-		
-		if (i == 4) {
-		
-			if (x > tabX[i] - 25 && x < tabX[i] + 25 && y > tabY[i] - 21 && y < tabY[i] + 21) {
-				printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
-			}
-		}
-		
-		
-		/// /////////  SUPPRIMER CALQUE	  /////////
-		
-		if (i == 5) {
-		
-			if (x > tabX[i] - 70 && x < tabX[i] + 70 && y > tabY[i] - 21 && y < tabY[i] + 21) {
-				printf("SUPPRIMER CALQUE\n");
-			}
-		}
-		
-		
-		
-		/// /////////  BOUTONS BLEUS  /////////
-		
-		if (i == 6) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("AAAADDDDD  LUUUUUUUUUUUUUUUUUUUMMMMMMM\n");
-			}
-		}
-		
-		if (i == 7) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("AAAADDDDD  COOOONTRASTE\n");
-			}
-		}
-		
-		if (i == 8) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("AAAADDDDD  OPACITE\n");
-			}
-		}
-		
-		if (i == 9) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("AAAADDDDD  INVERSER\n");
-			}
-		}
-		
-		if (i == 10) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("AAAADDDDD  SEPIA\n");
-			}
-		}
-		
-		
-		/// /////////  BOUTONS VERTS  /////////
-		
-		if (i == 11) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("DIIIIIIMMMM  LUUUUUUUUUUUUUUUUUUUMMMMMMM\n");
-			}
-		}
-		
-		if (i == 12) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("DIIMMMM  COOOONTRASTE\n");
-			}
-		}
-		
-		if (i == 13) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("DIIMMMM OPACITE\n");
-			}
-		}
-		
-		if (i == 14) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("DIIMMMM INVERSER\n");
-			}
-		}
-		
-		if (i == 15) {
-		
-			if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-				printf("DIIMMMM  SEPIA\n");
-			}
-		}
-		
-	}
-		
+
  /// ///////////////////////////////////////////////////
     
     printf("Coordonnees du point clique %d %d\n",x,y);
 }
+
+
+
 
 /// ///////////////////////////////////////////////////////////////////////////
 /// fonction de personnalisation du rendu
@@ -331,12 +438,10 @@ void quitte(void) {
     }
 }
 
+
 int main(int argc, char** argv) {
     int i;
-    unsigned int w,h;
-    // Initialize data;
-    w = 800;
-    h = 600;
+
     image_base = NULL;
     // Parse the command line arguments
     printf("Argc = %d\n",argc);
@@ -357,20 +462,27 @@ int main(int argc, char** argv) {
     fixeFonctionClavierSpecial(kbdSpFunc);
     fixeFonctionDessin(mondessin);
 
+    //initialisation du premier calque
+    initCalqueVide();
+
+    initGLIMAGIMP_IHM(listeCalque->longueur,listeCalque->hauteur,image_base,w+200,h);
 
 
 
-    TypeOperation op = normal;
-    Calque calque;
-    initCalque(&calque, "../images/F16.512.ppm", op, 1);
-    printf("%d  %d\n",calque.longueur,calque.hauteur);
+     //initImage(&image,calqueBlanc);
+    //image_base = (char*)calqueToChar(*(image.calque));
+
+
+    /*Calque calque;
+    initCalque(&calque, "/home/quentin/Bureau/ProjetC/GimpImac/images/TeaPot.512.ppm", op, 1);
+    unsigned char* test = (unsigned char*)calqueToChar(calque);
+    initGLIMAGIMP_IHM(calqueBlanc.longueur,calqueBlanc.hauteur,test,w+200,h);*/
 
 
 
-
-    char* ret = (char*)calqueToChar(calque);
-    initGLIMAGIMP_IHM(calque.longueur,calque.hauteur,ret,w+200,h);
-    exportCalque(calque,ret,"export.txt");
+    //exportCalque(calque,(unsigned char*)image_switch,"export.txt");
     //printf("%d  %d  %d\n\n",calque.tabPixels[0][0].r,calque.tabPixels[0][0].g,calque.tabPixels[0][0].b);
     return 0;
 }
+
+

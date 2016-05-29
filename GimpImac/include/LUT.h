@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <stdio.h>
+
 #ifndef LUT
 #define LUT
 
@@ -10,8 +13,8 @@ typedef struct Lut{
 
 } Lut;
 
-
-void resetLUT(Lut* lut);
+void initLUT(Lut* lut);
+void copieLUT(Lut lutSRC, Lut* lutCopie);
 
 void addlum(Lut* lut, int para);//augmente la luminosité
 void dimlum(Lut* lut, int para);//diminution de la luminosité

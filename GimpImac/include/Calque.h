@@ -45,14 +45,14 @@ typedef struct Calque{
 
 
 
-
-void initCalque(Calque* calque, const char* nomFichier, TypeOperation operation, int alpha);
+void initCalqueBlanc(Calque* calque,TypeOperation operation,int haut, int longu ,int alpha);
+void copieCalque (Calque src, Calque* copie);
+int initCalque(Calque* calque, const char* nomFichier, TypeOperation operation, int alpha);
 void appliquerLUTsurImage();
-void ajouterCalqueVierge();
 void changerOpacite();
 void modifOperationMelange();
 void supprimerCalque();
 
-char* calqueToChar (Calque calque);
-void exportCalque(Calque calque, char* ret, char* name);
+unsigned char* calqueToChar (Calque calque);
+void exportCalque(Calque calque, unsigned char* ret, char* name);
 #endif

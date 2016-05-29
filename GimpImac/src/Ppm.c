@@ -1,7 +1,7 @@
 #include "Ppm.h"
 #define SIZEMAX 5000000
 
- char* chargementPPM(const char * nomFichier, int* longueur, int*hauteur){
+ unsigned char* chargementPPM(const char * nomFichier, int* longueur, int*hauteur){
 
 
     //on ouvre le fichier
@@ -52,7 +52,7 @@
     if(valMax < 0 )return NULL;
     //on lit maintenant l'image
     //on declare le tableau ou l'on va stocker nos valeurs
-    char* tabImage = malloc(sizeof(char)*3*imLong*imHaut);
+    unsigned char* tabImage = malloc(sizeof(char)*3*imLong*imHaut);
 
 
     //on distingue 2 cas, dépendant du format de l'image
@@ -92,7 +92,7 @@
 }
 
 
- int exportPPM(const char *nomFichier, char* exp, int longueur, int hauteur) {
+ int exportPPM(const char *nomFichier, unsigned char* exp, int longueur, int hauteur) {
 
      FILE *fichier = fopen(nomFichier,"w");
      if(!fichier) {
