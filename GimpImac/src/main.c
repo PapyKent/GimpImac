@@ -12,7 +12,6 @@
 #include "outils.h"
 
 #include "Calque.h"
-#include "Image.h"
 float tabX[] = { 70 , 240, 370 , 625 , 875 , 750 , 650 , 650 , 650 , 650 , 650 , 850 , 850 , 850 , 850 , 850 };
 float tabY[] = { 48 , 48 , 48  , 531 , 531 , 531 , 51 , 147 , 243 , 339 , 435 , 51 , 147 , 243 , 339 , 435 };
 	
@@ -21,7 +20,6 @@ float tabY[] = { 48 , 48 , 48  , 531 , 531 , 531 , 51 , 147 , 243 , 339 , 435 , 
 unsigned char* image_base = NULL;
 unsigned char* image_switch = NULL;
 int switch_image = 0;
-Image* image;
 Calque calqueActuel;
 Calque* listeCalque;
 TypeOperation op = normal;
@@ -470,21 +468,6 @@ int main(int argc, char** argv) {
 
     initGLIMAGIMP_IHM(listeCalque->longueur,listeCalque->hauteur,image_base,w+200,h);
 
-
-
-     //initImage(&image,calqueBlanc);
-    //image_base = (char*)calqueToChar(*(image.calque));
-
-
-    /*Calque calque;
-    initCalque(&calque, "/home/quentin/Bureau/ProjetC/GimpImac/images/TeaPot.512.ppm", op, 1);
-    unsigned char* test = (unsigned char*)calqueToChar(calque);
-    initGLIMAGIMP_IHM(calqueBlanc.longueur,calqueBlanc.hauteur,test,w+200,h);*/
-
-
-
-    //exportCalque(calque,(unsigned char*)image_switch,"export.txt");
-    //printf("%d  %d  %d\n\n",calque.tabPixels[0][0].r,calque.tabPixels[0][0].g,calque.tabPixels[0][0].b);
     return 0;
 }
 
