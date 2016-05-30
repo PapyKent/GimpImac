@@ -279,6 +279,9 @@ void clickMouse(int button,int state,int x,int y) {
 
                    if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
                        printf("AAAADDDDD  SEPIA\n");
+                       sepia(listeCalque->lut);
+                       appliquerLUTsurImage(listeCalque);
+                       refreshScreen();
                    }
                }
 
