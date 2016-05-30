@@ -1,4 +1,5 @@
 #include "LUT.h"
+#include "Calque.h"
 #include <math.h>
 
 
@@ -82,6 +83,7 @@ void dimlum(Lut* lut, int para){
 	
 	
 }
+
 
 
 void addcon(Lut* lut) { 
@@ -185,28 +187,47 @@ void invert(Lut *lut) {
 	}
 }
 	
-void sepia(Lut* lut) {
+
+
+void sepia(Calque* calque){
+   
+	int i,j;
 	
-	int i;
-	float moyenne;
-	
-	for (i=0; i<255; i++) {
-		
-		moyenne = (lut->tabR[i] + lut->tabG[i] + lut->tabB[i]) / 3;
-	
-		// pour le ROUGE
-		
-		lut->tabR[i] = moyenne * 0.784;
-		
-		// pour le VERT
-		
-		lut->tabG[i] = moyenne * 0.588;
-		
-		// pour le BLEU
-		
-		lut->tabB[i] = moyenne * 0.392;
-	
+    for(i = 0; i < calque->hauteur; i++){
+        for(j = 0; j < calque->longueur; j++){
+			
+			float moyenne = (calque->tabPixels[i][j].r + calque->tabPixels[i][j].g + calque->tabPixels[i][j]. b) / 3;
+			
+            calque->tabPixels[i][j].r = moyenne * 0.784;
+            calque->tabPixels[i][j].g = moyenne * 0.588;
+            calque->tabPixels[i][j].b = moyenne * 0.392;
+		}		
 	}
 	
+}
+
+void noirBlanc(Calque* calque, int para){
+   
+	int i,j;
+	
+    for(i = 0; i < calque->hauteur; i++){
+        for(j = 0; j < calque->longueur; j++){
+			
+			float moyenne = (calque->tabPixels[i][j].r + calque->tabPixels[i][j].g + calque->tabPixels[i][j]. b) / 3;
+			
+			if (moyenne < para) {
+				calque->tabPixels[i][j].r = 0;
+				calque->tabPixels[i][j].g = 0;
+				calque->tabPixels[i][j].b = 0;
+			}
+           
+			if (moyenne >= para) {
+				calque->tabPixels[i][j].r = 255;
+				calque->tabPixels[i][j].g = 255;
+				calque->tabPixels[i][j].b = 255;
+			}
+            
+		}		
+	}
 	
 }

@@ -7,9 +7,9 @@
 typedef struct Lut{
 
 	//canaux
-	int tabR[255] ;
-	int tabG[255] ;
-	int tabB[255] ;
+	int tabR[256] ;
+	int tabG[256] ;
+	int tabB[256] ;
 
 } Lut;
 
@@ -21,7 +21,7 @@ void dimlum(Lut* lut, int para);//diminution de la luminosité
 void addcon(Lut* lut);//augmente le contraste
 void dimcon(Lut* lut);//diminution du contraste
 void invert(Lut* lut);//inversion de la couleur
-void sepia(Lut* lut);//applique un effet sepia à l'image
+
 
 // --A DEFINIR -- ajouter pls para
 void sepia();//effet sepia

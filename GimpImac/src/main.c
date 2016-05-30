@@ -259,7 +259,9 @@ void clickMouse(int button,int state,int x,int y) {
                if (i == 8) {
 
                    if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
-                       printf("AAAADDDDD  OPACITE\n");
+                       printf("BBBBBBBBB&&&&&WWWWWWWW\n");
+                       noirBlanc(listeCalque,128);
+                       refreshScreen();
                    }
                }
 
@@ -277,8 +279,7 @@ void clickMouse(int button,int state,int x,int y) {
 
                    if (x > tabX[i] - 10 && x < tabX[i] + 10 && y > tabY[i] - 10 && y < tabY[i] + 10) {
                        printf("AAAADDDDD  SEPIA\n");
-                       sepia(listeCalque->lut);
-                       appliquerLUTsurImage(listeCalque);
+                       sepia(listeCalque);
                        refreshScreen();
                    }
                }
@@ -361,7 +362,7 @@ void mondessin() {
     fixeCouleur(1.0,1.0,1.0);
     writeString(0.71,0.915,"LUMINOSITE");
     writeString(0.71,0.755,"CONTRASTE");
-    writeString(0.71,0.595,"OPACITE");
+    writeString(0.71,0.595,"NOIR ET BLANC");
     writeString(0.71,0.435,"INVERSER");
     writeString(0.71,0.275,"SEPIA");
     writeString(0.03,0.915,"Importer image");
